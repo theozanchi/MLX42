@@ -60,22 +60,22 @@ static int8_t mlx_bind_texture(mlx_ctx_t* mlx, mlx_image_t* img)
  * Internal function to draw a single instance of an image
  * to the screen.
  */
-void mlx_draw_instance(mlx_ctx_t* mlx, mlx_image_t* img, mlx_instance_t* instance)
+void mlx_draw_instance(mlx_ctx_t* mlx, mlx_image_t* img, mlx_instance_t* instance, int32_t instanceDepth)
 {
-	float w = (float) img->width;
-	float h = (float) img->height;
-	float x = (float) instance->x;
-	float y = (float) instance->y;
-	float z = (float) instance->z;
+	float w = (float)img->width;
+	float h = (float)img->height;
+	float x = (float)instance->x;
+	float y = (float)instance->y;
+	float z = (float)instanceDepth;
 	int8_t tex = mlx_bind_texture(mlx, img);
 
 	vertex_t vertices[6] = {
-			(vertex_t){x, y, z, 0.f, 0.f, tex},
-			(vertex_t){x + w, y + h, z, 1.f, 1.f, tex},
-			(vertex_t){x + w, y, z, 1.f, 0.f, tex},
-			(vertex_t){x, y, z, 0.f, 0.f, tex},
-			(vertex_t){x, y + h, z, 0.f, 1.f, tex},
-			(vertex_t){x + w, y + h, z, 1.f, 1.f, tex},
+		(vertex_t){x, y, z, 0.f, 0.f, tex},
+		(vertex_t){x + w, y + h, z, 1.f, 1.f, tex},
+		(vertex_t){x + w, y, z, 1.f, 0.f, tex},
+		(vertex_t){x, y, z, 0.f, 0.f, tex},
+		(vertex_t){x, y + h, z, 0.f, 1.f, tex},
+		(vertex_t){x + w, y + h, z, 1.f, 1.f, tex},
 	};
 	memmove(mlx->batch_vertices + mlx->batch_size, vertices, sizeof(vertices));
 	mlx->batch_size += 6;
@@ -84,81 +84,66 @@ void mlx_draw_instance(mlx_ctx_t* mlx, mlx_image_t* img, mlx_instance_t* instanc
 		mlx_flush_batch(mlx);
 }
 
-mlx_instance_t* mlx_grow_instances(mlx_image_t* img, bool* did_realloc)
+static mlx_instance_t* mlx_grow_instances(mlx_image_t* img)
 {
+	size_t new_size = 0;
 	mlx_image_ctx_t* const ctx = img->context;
-	if (img->count >= ctx->instances_capacity)
+	mlx_instance_t* temp = NULL;
+
+	// Do we need to grow ?
+	if (img->count + 1 >= ctx->instances_capacity)
 	{
 		if (ctx->instances_capacity == 0)
-			ctx->instances_capacity = img->count;
+			new_size++;
 		else
-			ctx->instances_capacity *= 2;
-		*did_realloc = true;
-		return realloc(img->instances, ctx->instances_capacity * sizeof(mlx_instance_t));
+		{
+			new_size = ctx->instances_capacity * 2;
+		}
+
+		if (!(temp = realloc(img->instances, new_size * sizeof(mlx_instance_t))))
+			return (NULL);
+		ctx->instances_capacity = new_size;
+		img->instances = temp;
 	}
-	*did_realloc = false;
-	return img->instances;
+	img->count++;
+	return (img->instances);
 }
 
 //= Public =//
-
-void mlx_set_instance_depth(mlx_instance_t* instance, int32_t zdepth)
-{
-	MLX_NONNULL(instance);
-
-	if (instance->z == zdepth)
-		return;
-	instance->z = zdepth;
-
-	/**
-	 * NOTE: The reason why we don't sort directly is that
-	 * the user might call this function multiple times in a row and we don't
-	 * want to sort for every change. Pre-loop wise that is.
-	 */
-	sort_queue = true;
-}
 
 int32_t mlx_image_to_window(mlx_t* mlx, mlx_image_t* img, int32_t x, int32_t y)
 {
 	MLX_NONNULL(mlx);
 	MLX_NONNULL(img);
 
-	// Allocate buffers...
-	img->count++;
-	bool did_realloc;
-	mlx_instance_t* instances = mlx_grow_instances(img, &did_realloc);
-	draw_queue_t* queue = calloc(1, sizeof(draw_queue_t));
-	if (!instances || !queue)
+	mlx_ctx_t* mlxctx = mlx->context;
+
+	// Grow instances to fit new instance.
+	mlx_instance_t* instances;
+
+	if (!(instances = mlx_grow_instances(img)))
 	{
-		if (did_realloc)
-			free(instances);
-		return (free(queue), mlx_error(MLX_MEMFAIL), -1);
+		mlx_error(MLX_MEMFAIL);
+		return (-1);
 	}
 
-	// Set data...
-	queue->image = img;
-	int32_t index = queue->instanceid = img->count - 1;
+	const int32_t index = img->count - 1;
 	img->instances = instances;
 	img->instances[index].x = x;
 	img->instances[index].y = y;
-
-	// NOTE: We keep updating the Z for the convenience of the user.
-	// Always update Z depth to prevent overlapping images by default.
-	img->instances[index].z = ((mlx_ctx_t*)mlx->context)->zdepth++;
+	img->instances[index].custom_depth = -1;
 	img->instances[index].enabled = true;
 
-	// Add draw call...
-	sort_queue = true;
-	mlx_list_t* templst;
-	if ((templst = mlx_lstnew(queue)))
-	{
-		mlx_lstadd_front(&((mlx_ctx_t*)mlx->context)->render_queue, templst);
-		return (index);
-	}
-	return (mlx_freen(2, instances, queue), mlx_error(MLX_MEMFAIL), -1);
+	// Add drawcall
+	draw_queue_t queue = (draw_queue_t){ img, img->count - 1, 0};
+	if (!mlx_vector_push_back(&(mlxctx->render_queue), &queue))
+		return (-1);
+
+	mlxctx->instance_count++;
+	return (index);
 }
 
-mlx_image_t* mlx_new_image(mlx_t* mlx, uint32_t width, uint32_t height)
+mlx_image_t *mlx_new_image(mlx_t* mlx, uint32_t width, uint32_t height)
 {
 	MLX_NONNULL(mlx);
 
@@ -209,9 +194,15 @@ void mlx_delete_image(mlx_t* mlx, mlx_image_t* image)
 	mlx_ctx_t* mlxctx = mlx->context;
 
 	// Delete all instances in the render queue
-	mlx_list_t* quelst;
-	while ((quelst = mlx_lstremove(&mlxctx->render_queue, image, &mlx_equal_inst)))
-		mlx_freen(2, quelst->content, quelst);
+	for(int32_t i = mlxctx->render_queue.count - 1; i >= 0 ; i--)
+	{
+		draw_queue_t* element = mlx_vector_get(&mlxctx->render_queue, i);
+
+		if (element->image == image)
+			mlx_vector_delete(&mlxctx->render_queue, i);
+	}
+
+	mlxctx->instance_count -= image->count;
 
 	mlx_list_t* imglst;
 	if ((imglst = mlx_lstremove(&mlxctx->images, image, &mlx_equal_image)))
@@ -219,6 +210,18 @@ void mlx_delete_image(mlx_t* mlx, mlx_image_t* image)
 		glDeleteTextures(1, &((mlx_image_ctx_t*)image->context)->texture);
 		mlx_freen(5, image->pixels, image->instances, image->context, imglst, image);
 	}
+}
+
+int32_t mlx_image_calculate_max_depth(mlx_image_t* image)
+{
+	int32_t depth = 0;
+	for (int32_t i = 0; i < image->count; i++)
+	{
+		const mlx_instance_t* instance = &image->instances[i];
+		depth += instance->custom_depth > 0 ? instance->custom_depth : 1;
+	}
+
+	return depth;
 }
 
 bool mlx_resize_image(mlx_image_t* img, uint32_t nwidth, uint32_t nheight)
