@@ -6,7 +6,7 @@
 #    By: W2Wizard <w2.wizzard@gmail.com>              +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/02/26 21:36:38 by W2Wizard      #+#    #+#                  #
-#    Updated: 2022/08/24 16:29:24 by swofferh      ########   odam.nl          #
+#    Updated: 2022/11/14 11:39:41 by lde-la-h      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,14 +31,14 @@ start:
 #//= Make Rules =//#
 $(NAME): $(OBJS)
 	@ar rc $@ $^
-	@echo "$(CYAN)Compiling$(RESET) with flags $(RED)-> $(RESET)$(CFLAGS)"
+	@echo "$(CYAN)Compiling$(RESET) with flags $(RED)-> $(RESET)$(CFLAGS)\n"
 	@echo "$(CYAN)---------"
 	@echo "$(CYAN)Compiling$(RESET) DONE."
 	@echo "$(CYAN)---------"
 	@echo "$(RESET)\n$(MLX42) powered by W2Wizard."
 
 %.o: %.c $(HDRS)
-	@echo "$(CYAN)Compiling$(RESET) $(notdir $<)"
+	@echo "$(CYAN)Compiling:$(RESET) $(notdir $<)"
 	@$(CC) $(CFLAGS) -o $@ -c $< $(HEADERS)
 
 # Converting shaders to .c files

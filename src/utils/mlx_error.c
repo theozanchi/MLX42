@@ -6,7 +6,7 @@
 /*   By: W2Wizard <w2.wizzard@gmail.com>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/28 02:51:54 by W2Wizard      #+#    #+#                 */
-/*   Updated: 2022/08/10 13:01:50 by lde-la-h      ########   odam.nl         */
+/*   Updated: 2022/11/14 11:35:20 by lde-la-h      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,7 @@ bool mlx_error(mlx_errno_t val)
 {
 	mlx_errno = val;
 #ifndef NDEBUG
-# ifdef _WIN32
 	fprintf(stderr, "MLX42: %s", mlx_strerror(mlx_errno));
-# else
-	warnx("MLX42: %s", mlx_strerror(mlx_errno));
-# endif
 #endif
 	return (false);
 }
