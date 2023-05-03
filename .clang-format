@@ -1,0 +1,26 @@
+---
+Language: Cpp
+BasedOnStyle: Microsoft
+IndentWidth: 4
+UseTab: Always
+AllowShortFunctionsOnASingleLine: None
+AllowShortIfStatementsOnASingleLine: false
+AllowShortLoopsOnASingleLine: false
+AllowShortLambdasOnASingleLine: false
+ReferenceAlignment: Left
+PointerAlignment: Left
+ColumnLimit: 200
+IndentCaseLabels: true
+SpacesInContainerLiterals: true
+AlignConsecutiveMacros:
+  Enabled: true
+  AcrossEmptyLines: true
+  AcrossComments: false
+BraceWrapping:
+  AfterEnum: true
+  AfterStruct: true
+  AfterUnion: true
+  AfterClass: true
+  SplitEmptyFunction: true
+FixNamespaceComments: false
+InsertNewlineAtEOF : true
