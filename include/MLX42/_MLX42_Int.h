@@ -33,12 +33,9 @@
 # include <string.h> /* strlen, memmove, ... */
 # include <stdarg.h> /* va_arg, va_end, ... */
 # include <assert.h> /* assert, static_assert, ... */
-# ifndef MLX_SWAP_INTERVAL
-#  define MLX_SWAP_INTERVAL 1
-# endif
-# ifndef MLX_BATCH_SIZE
-#  define MLX_BATCH_SIZE 12000
-# endif
+# define MLX_SWAP_INTERVAL 1
+# define MLX_BATCH_SIZE 12000
+# define ARRAY_INITIAL_CAPACITY 8
 # define BPP sizeof(int32_t) /* Only support RGBA */
 # define GETLINE_BUFF 1280
 # define MLX_MAX_STRING 512 /* Arbitrary string limit */
