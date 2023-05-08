@@ -23,6 +23,17 @@ It provides primitive tools to draw textures onto the window as well as modifyin
 
 MLX42 comes with a plethora of features that make using it actually a joy instead of a chore.
 
+## Todo 🏗️
+
+For 2.4 we need the following to be implemented:
+- [ ] Use dynamic array over linked list
+- [ ] Support multi-window (branch to experiment)
+- [ ] Remove dependency of mlx_terminate
+- [ ] Remove dependency of mlx_set_instance_depth
+- [ ] Create Python script to encode PNG to XPM42
+- [ ] Merge Headers & re-do doxygen docs
+- [ ] Use bitmasks to control options for instances / images
+
 ## Cross-Platform 🖥️
 
 Run it on your grandma's WindowsXP, on your uncle's debian or on a hipster's MacOS!
