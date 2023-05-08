@@ -1,5 +1,5 @@
 // -----------------------------------------------------------------------------
-// Codam Coding College, Amsterdam @ 2021/12/27 by W2Wizard.
+// Codam Coding College, Amsterdam @ 2021/12/27 by W2Wizard <main@w2wizard.dev>
 // See README in the root project for more information.
 // -----------------------------------------------------------------------------
 
@@ -21,16 +21,16 @@
 #if defined(__APPLE__)
 #define GL_SILENCE_DEPRECATION
 #endif
-#define MLX_SWAP_INTERVAL	   1
-#define MLX_BATCH_SIZE		   12000
-#define ARRAY_INITIAL_CAPACITY 8
-#define MLX_ASSERT(cond, msg)  assert(cond&& msg);
-#define MLX_NONNULL(var)	   MLX_ASSERT(var, "Value can't be null");
-#include "KHR/khrplatform.h"
+#define MLX_SWAP_INTERVAL	  1
+#define MLX_BATCH_SIZE		  12000
+#define MLX_ARRAY__CAPACITY	  8
+#define MLX_ASSERT(cond, msg) assert(cond&& msg);
+#define MLX_NONNULL(var)	  MLX_ASSERT(var, "Value can't be null");
 #include "MLX42/MLX42.h"
 #include "glad/glad.h"
 #include "lodepng/lodepng.h"
 #include <GLFW/glfw3.h>
+#include <KHR/khrplatform.h>
 #include <memory.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -97,11 +97,11 @@ typedef struct mlx_hook
 } mlx_hook_t;
 
 // Define to make it easier to declare hooks.
-#define DECLARE_GLFW_WRAP_HOOK(name, func)                                     \
-	typedef struct                                                             \
-	{                                                                          \
-		void* param;                                                           \
-		func* orig;                                                            \
+#define DECLARE_GLFW_WRAP_HOOK(name, func)                                                                             \
+	typedef struct                                                                                                     \
+	{                                                                                                                  \
+		void* param;                                                                                                   \
+		func* orig;                                                                                                    \
 	} name##_t;
 
 DECLARE_GLFW_WRAP_HOOK(mlx_scroll, mlx_scrollfunc);

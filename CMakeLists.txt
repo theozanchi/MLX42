@@ -90,35 +90,35 @@ add_custom_command(
 add_library(mlx42 STATIC
 
 	# Root
-	${SOURCE_DIR}/mlx_cursor.c
-	${SOURCE_DIR}/mlx_exit.c
-	${SOURCE_DIR}/mlx_images.c
-	${SOURCE_DIR}/mlx_init.c
-	${SOURCE_DIR}/mlx_keys.c
-	${SOURCE_DIR}/mlx_loop.c
-	${SOURCE_DIR}/mlx_monitor.c
-	${SOURCE_DIR}/mlx_mouse.c
-	${SOURCE_DIR}/mlx_put_pixel.c
-	${SOURCE_DIR}/mlx_window.c
+	# ${SOURCE_DIR}/mlx_cursor.c
+	# ${SOURCE_DIR}/mlx_exit.c
+	# ${SOURCE_DIR}/mlx_images.c
+	# ${SOURCE_DIR}/mlx_init.c
+	# ${SOURCE_DIR}/mlx_keys.c
+	# ${SOURCE_DIR}/mlx_loop.c
+	# ${SOURCE_DIR}/mlx_monitor.c
+	# ${SOURCE_DIR}/mlx_mouse.c
+	# ${SOURCE_DIR}/mlx_put_pixel.c
+	# ${SOURCE_DIR}/mlx_window.c
 
-	# Utils
-	${SOURCE_DIR}/utils/mlx_error.c
-	${SOURCE_DIR}/utils/mlx_list.c
-	${SOURCE_DIR}/utils/mlx_utils.c
-	${SOURCE_DIR}/utils/mlx_compare.c
+	# # Utils
+	# ${SOURCE_DIR}/utils/mlx_error.c
+	# ${SOURCE_DIR}/utils/mlx_list.c
+	# ${SOURCE_DIR}/utils/mlx_utils.c
+	# ${SOURCE_DIR}/utils/mlx_compare.c
 
-	# Textures
-	${SOURCE_DIR}/font/mlx_font.c
-	${SOURCE_DIR}/textures/mlx_png.c
-	${SOURCE_DIR}/textures/mlx_texture.c
-	${SOURCE_DIR}/textures/mlx_xpm42.c
+	# # Textures
+	# ${SOURCE_DIR}/font/mlx_font.c
+	# ${SOURCE_DIR}/textures/mlx_png.c
+	# ${SOURCE_DIR}/textures/mlx_texture.c
+	# ${SOURCE_DIR}/textures/mlx_xpm42.c
 
-	# Libs
+	# # Libs
 	lib/png/lodepng.c
 	lib/glad/glad.c
 
-	mlx_vert_shader.c
-	mlx_frag_shader.c
+	# mlx_vert_shader.c
+	# mlx_frag_shader.c
 )
 target_include_directories(mlx42 PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
