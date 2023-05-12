@@ -380,15 +380,15 @@ extern "C"
 	{
 		MLX_STRETCH_IMAGE = 0, // Should images resize with the window as it's
 							   // being resized or not. Default: false
-		MLX_FULLSCREEN, // Should the window be in Fullscreen, note it will
+		MLX_FULLSCREEN,		   // Should the window be in Fullscreen, note it will
 						// fullscreen at the given resolution. Default: false
-		MLX_MAXIMIZED, // Start the window in a maximized state, overwrites the
-					   // fullscreen state if this is true. Default: false
-		MLX_DECORATED, // Have the window be decorated with a window bar.
-					   // Default: true
-		MLX_HEADLESS,  // Run in headless mode, no window is created. (NOTE:
-					   // Still requires some form of window manager such as
-					   // xvfb)
+		MLX_MAXIMIZED,	  // Start the window in a maximized state, overwrites the
+						  // fullscreen state if this is true. Default: false
+		MLX_DECORATED,	  // Have the window be decorated with a window bar.
+						  // Default: true
+		MLX_HEADLESS,	  // Run in headless mode, no window is created. (NOTE:
+						  // Still requires some form of window manager such as
+						  // xvfb)
 		MLX_SETTINGS_MAX, // Setting count.
 	} mlx_settings_t;
 
@@ -409,8 +409,8 @@ extern "C"
 	 * @param[in] mods The modifier keys pressed together with the mouse key.
 	 * @param[in] param Additional parameter to pass on to the function.
 	 */
-	typedef void (*mlx_mousefunc)(mouse_key_t button, action_t action,
-								  modifier_key_t mods, void* param);
+	typedef void (*mlx_mousefunc)(mouse_key_t button, action_t action, modifier_key_t mods,
+								  void* param);
 
 	/**
 	 * Callback function used to handle raw mouse movement.
@@ -481,8 +481,7 @@ extern "C"
 	 * @param[in] resize Enable window resizing.
 	 * @returns Ptr to the MLX handle or null on failure.
 	 */
-	mlx_t* mlx_init(int32_t width, int32_t height, const char* title,
-					bool resize);
+	mlx_t* mlx_init(int32_t width, int32_t height, const char* title, bool resize);
 
 	/**
 	 * Set a setting for MLX42.
@@ -606,8 +605,8 @@ extern "C"
 	 * @param[in] min_h The min height of the window.
 	 * @param[in] max_h The max height of the window.
 	 */
-	void mlx_set_window_limit(mlx_t* mlx, int32_t min_w, int32_t min_h,
-							  int32_t max_w, int32_t max_h);
+	void mlx_set_window_limit(mlx_t* mlx, int32_t min_w, int32_t min_h, int32_t max_w,
+							  int32_t max_h);
 
 	/**
 	 * Sets the title of the window.
@@ -835,8 +834,7 @@ extern "C"
 	 * @param[in] y The Y coordinate position.
 	 * @param[in] color The color value to put.
 	 */
-	void mlx_put_pixel(mlx_image_t* image, uint32_t x, uint32_t y,
-					   uint32_t color);
+	void mlx_put_pixel(mlx_image_t* image, uint32_t x, uint32_t y, uint32_t color);
 
 	/**
 	 * Creates and allocates a new image buffer.
@@ -854,7 +852,7 @@ extern "C"
 	 *
 	 * @warning Try to display as few images on the window as possible,
 	 * drawing too many images will cause a loss in peformance!
-	 * 
+	 *
 	 * @note Keep in mind that the instance array gets reallocated, try
 	 * to store the return value to the instance!
 	 * NOT the pointer! It will become invalid!
@@ -865,8 +863,7 @@ extern "C"
 	 * @param[in] y The Y position.
 	 * @return Index to the instance, or -1 on failure.
 	 */
-	int32_t mlx_image_to_window(mlx_t* mlx, mlx_image_t* img, int32_t x,
-								int32_t y);
+	int32_t mlx_image_to_window(mlx_t* mlx, mlx_image_t* img, int32_t x, int32_t y);
 
 	/**
 	 * Deleting an image will remove it from the render queue as well as any and
@@ -915,8 +912,7 @@ extern "C"
 	 * @param[in] y The Y location.
 	 * @return Image ptr to the string.
 	 */
-	mlx_image_t* mlx_put_string(mlx_t* mlx, const char* str, int32_t x,
-								int32_t y);
+	mlx_image_t* mlx_put_string(mlx_t* mlx, const char* str, int32_t x, int32_t y);
 
 	/**
 	 * Retrieve the texture data for the built-in font.

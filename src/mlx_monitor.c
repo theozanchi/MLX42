@@ -3,14 +3,14 @@
 /*                                                        ::::::::            */
 /*   mlx_monitor.c                                      :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: W2Wizard <w2.wizzard@gmail.com>              +#+                     */
+/*   By: lde-la-h <main@w2wizard.dev>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/19 17:18:59 by W2Wizard      #+#    #+#                 */
-/*   Updated: 2022/06/27 20:02:38 by lde-la-h      ########   odam.nl         */
+/*   Updated: 2023/05/12 13:34:23 by lde-la-h      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "MLX42/MLX42_Int.h"
+#include "MLX42/internal.h"
 
 //= Public =//
 

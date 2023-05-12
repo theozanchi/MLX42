@@ -3,14 +3,14 @@
 /*                                                        ::::::::            */
 /*   mlx_put_pixel.c                                    :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: W2Wizard <w2.wizzard@gmail.com>              +#+                     */
+/*   By: lde-la-h <main@w2wizard.dev>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/28 03:30:13 by W2Wizard      #+#    #+#                 */
-/*   Updated: 2022/06/29 16:00:30 by lde-la-h      ########   odam.nl         */
+/*   Updated: 2023/05/12 13:34:29 by lde-la-h      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "MLX42/MLX42_Int.h"
+#include "MLX42/internal.h"
 
 // BUG: Linux may experience a red hue instead due to endiannes
 void mlx_draw_pixel(uint8_t* pixel, uint32_t color)

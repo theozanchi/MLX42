@@ -1,16 +1,9 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        ::::::::            */
-/*   mlx_xpm42.c                                        :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: W2Wizard <w2.wizzard@gmail.com>              +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2021/12/28 03:42:29 by W2Wizard      #+#    #+#                 */
-/*   Updated: 2022/06/27 19:58:33 by lde-la-h      ########   odam.nl         */
-/*                                                                            */
-/* ************************************************************************** */
+// -----------------------------------------------------------------------------
+// See README in the root project for more information.
+// Codam Coding College, Amsterdam @ 2021/12/28 by W2Wizard <main@w2wizard.dev>
+// -----------------------------------------------------------------------------
 
-#include "MLX42/MLX42_Int.h"
+#include "MLX42/internal.h"
 
 /**
  * XPM is an obscure image format which can't seem to make up its mind

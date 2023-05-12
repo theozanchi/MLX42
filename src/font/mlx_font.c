@@ -1,17 +1,10 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        ::::::::            */
-/*   mlx_font.c                                         :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: W2Wizard <w2.wizzard@gmail.com>              +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2022/02/22 12:01:37 by W2Wizard      #+#    #+#                 */
-/*   Updated: 2022/06/27 19:53:36 by lde-la-h      ########   odam.nl         */
-/*                                                                            */
-/* ************************************************************************** */
+// -----------------------------------------------------------------------------
+// See README in the root project for more information.
+// Codam Coding College, Amsterdam @ 2022/02/22 by W2Wizard <main@w2wizard.dev>
+// -----------------------------------------------------------------------------
 
 #include "font.h"
-#include "MLX42/MLX42_Int.h"
+#include "MLX42/internal.h"
 
 //= Private =//
 
@@ -64,7 +57,7 @@ mlx_image_t* mlx_put_string(mlx_t* mlx, const char* str, int32_t x, int32_t y)
 
 	mlx_image_t* strimage;
 	const size_t len = strlen(str);
-	if (len > MLX_MAX_STRING)
+	if (len > 2048)
 		return ((void*)mlx_error(MLX_STRTOOBIG));	
 	if (!(strimage = mlx_new_image(mlx, len * FONT_WIDTH, FONT_HEIGHT)))
 		return (NULL);
